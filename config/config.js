@@ -1,3 +1,6 @@
+require('dotenv').config();
 module.exports = {
-  mongoURI: "mongodb+srv://ahmed:ahmed12345@cluster0.cgzzj.mongodb.net/HTTP?retryWrites=true&w=majority" 
+  mongoURI: process.env.MONGO_URI
 };
+app.use("/api/chat", chat);
+app.use("/api/posts", posts);

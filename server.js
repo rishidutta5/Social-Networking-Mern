@@ -1,5 +1,4 @@
-
-
+require('dotenv').config();
 
 const express = require("express")
 const db = require('./config/db')
@@ -16,7 +15,21 @@ const http = require('http');
 const socketio = require('socket.io');
 const server = http.createServer(app)
 const path = require("path");
-dotenv.config();
+
+const mongoose = require('mongoose');
+
+mongoose.set('strictQuery', false);
+
+const mongoURL = process.env.MONGO_URL; // Note the name here!
+
+if (!mongoURL) {
+  console.error("Error: MONGO_URL environment variable is not defined");
+  process.exit(1);
+}
+
+mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB connected successfully"))
+  .catch(err => console.error("MongoDB connection error:", err));
 
 
 const io = require("socket.io")(server, {
